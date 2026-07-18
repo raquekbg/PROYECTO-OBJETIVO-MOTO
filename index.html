@@ -7,6 +7,16 @@
 
 <style>
 body {
+    button {
+    background: #d9b8ff;
+    color: #3b3b3b;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 20px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #111, #444);
     color: white;
@@ -76,9 +86,21 @@ El camino hacia la Honda CBR empieza aquí.
 
 <h2>Dinero ahorrado</h2>
 
-<div class="money">
-400 € / 6000 €
+<h2>Ahorro conseguido</h2>
+
+<div class="money" id="dinero">
+400 € / 3000 €
 </div>
+
+
+<div class="progress-container">
+    <div class="progress" id="barra"></div>
+</div>
+
+
+<button onclick="añadirDinero()">
+Añadir ahorro 💜
+</button>
 
 <div class="progress-container">
 <div class="progress"></div>
@@ -93,6 +115,60 @@ Cada kilómetro empieza con un pequeño paso.
 </p>
 
 </div>
+<script>
 
+const objetivo = 3000;
+
+let ahorrado = localStorage.getItem("ahorroMoto");
+
+if (ahorrado === null) {
+    ahorrado = 400;
+} else {
+    ahorrado = Number(ahorrado);
+}
+
+
+function actualizar(){
+
+    document.getElementById("dinero").innerHTML =
+    ahorrado + " € / " + objetivo + " €";
+
+
+    let porcentaje = (ahorrado / objetivo) * 100;
+
+    if(porcentaje > 100){
+        porcentaje = 100;
+    }
+
+    document.getElementById("barra").style.width =
+    porcentaje + "%";
+
+}
+
+
+function añadirDinero(){
+
+    let cantidad = prompt("¿Cuánto dinero quieres añadir?");
+
+    if(cantidad !== null && cantidad !== ""){
+
+        cantidad = Number(cantidad);
+
+        ahorrado += cantidad;
+
+        localStorage.setItem(
+            "ahorroMoto",
+            ahorrado
+        );
+
+        actualizar();
+    }
+
+}
+
+
+actualizar();
+
+</script>
 </body>
 </html>
